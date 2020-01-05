@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import config from '../../config';
 import {
   View,
@@ -12,23 +13,26 @@ import {
   ScrollView,
 } from 'react-native';
 import {ImageCarousel} from '../presentation/imageCarousel';
-// console.log('Image Caro ' + ImageCarousel);
 
 export class Profile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
+  componentDidMount() {
+    console.log('Profile');
+    console.log(this.props);
+    console.log(this.props.state);
+  }
   render() {
     return (
       <ScrollView>
         <View style={{flex: 1, width: 100 + '%', height: 100 + '%'}}>
           {/* <Image style={styles.img} source={{uri: 'https://images.unsplash.com/photo-1516069213778-f52c5ac638fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}} /> */}
           <ImageCarousel layout={'default'} />
-          <Text style={styles.name}>Helo</Text>
+          <Text style={styles.name}>{this.props.user.account.user.id}</Text>
         </View>
       </ScrollView>
-
     );
   }
 }
@@ -39,9 +43,18 @@ const styles = StyleSheet.create({
     width: 100 + '%',
   },
   name: {
-    fontSize:30,
-  }
+    fontSize: 30,
+  },
 });
 
+const mapStateToProps = state => {
+  return {
+    user: state,
+  };
+};
 
-export default Profile;
+const dispatchToProps = dipatch => {
+  return {};
+};
+
+export default connect(mapStateToProps, dispatchToProps)(Profile);

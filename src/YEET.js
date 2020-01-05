@@ -4,13 +4,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 // import {Login, Register, MainFeed} from './components/screens';
-import {Login} from './components/screens/Login';
-import {Register} from './components/screens/Register';
-import {MainFeed} from './components/screens/MainFeed';
-import {ThailandFeed} from './components/screens/ThailandFeed';
-import {Camera} from './components/screens/Camera';
-import {ChatFeed} from './components/screens/ChatFeed';
-import {Profile} from './components/screens/Profile';
+import Login from './components/screens/Login';
+import Register from './components/screens/Register';
+import MainFeed from './components/screens/MainFeed';
+import ThailandFeed from './components/screens/ThailandFeed';
+import Camera from './components/screens/Camera';
+import ChatFeed from './components/screens/ChatFeed';
+import Profile from './components/screens/Profile';
 import {ImageCarousel} from './components/presentation/imageCarousel';
 
 import {
@@ -47,14 +47,14 @@ const TabScreens = createBottomTabNavigator(
         let AwesomeIcon = FontAwesome;
         let iconName;
         if (routeName === 'feed') {
-          iconName = `globe-americas`;
+          iconName = 'globe-americas';
         }
         if (routeName === 'profile') {
-          iconName = `user-circle`;
+          iconName = 'user-circle';
         } else if (routeName === 'camera') {
-          iconName = `camera`;
+          iconName = 'camera';
         } else if (routeName === 'chat') {
-          iconName = `comments`;
+          iconName = 'comments';
         }
 
         // You can return any component that you like here!
@@ -86,7 +86,7 @@ const MainStack = createSwitchNavigator(
     main: TabScreens,
   },
   {
-    initialRouteName: 'main',
+    initialRouteName: 'login',
   },
 );
 

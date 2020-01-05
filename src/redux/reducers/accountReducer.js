@@ -11,10 +11,9 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case constants.USER_RECIEVED:
       const user = {
-        id: action.data.uid,
+        id: action.data.data.user.uid,
         // photos: action.data,
       };
-      // console.log(action);
       newState.user = user;
       return newState;
     default:

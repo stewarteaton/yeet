@@ -1,7 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import config from '../../config';
+import actions from '../../redux/actions';
+import config from '../../config/index';
+import {connect} from 'react-redux';
+
 import {
   View,
   Text,
@@ -25,6 +28,10 @@ export class Login extends Component {
     };
   }
 
+  componentDidMount(){
+    console.log(this.props);
+  }
+
   updateText(text, field) {
     // must assign object because nested
     let newCredentials = Object.assign(this.state.credentials);
@@ -46,7 +53,6 @@ export class Login extends Component {
       })
       .then(response => response.json())
       .then(jsonResponse => {
-          console.log('RIght Here');
           console.log(jsonResponse);
           if (jsonResponse.error != null){
               Alert.alert('Error', jsonResponse.error,
@@ -58,19 +64,13 @@ export class Login extends Component {
           }
           if (jsonResponse.confirmation === 'Success!'){
               // dispatch user data to redux store
-              // console.log(jsonResponse);
-              // this.props.userRecieved(jsonResponse);
+              console.log(jsonResponse);
+              this.props.userRecieved(jsonResponse);
               this.props.navigation.navigate({routeName: 'main'});
           }
       })
       .catch(err => {
-          console.log(err.error);
-      //     Alert.alert('Error', err.error,
-      //             [
-      //             {text: 'OK', onPress: () => console.log(err.error)},
-      //             ],
-      //             {cancelable: false},
-      //         );
+          console.log(err);
       });
   }
 
@@ -107,7 +107,7 @@ export class Login extends Component {
         <TouchableOpacity
           style={[styles.login, {position: 'absolute', top: 55 + '%'}]}
           onPress={() => { this.login(); }}>
-          <Text style={{color: 'black', fontSize: 20}}>
+          <Text style={{color: 'white', fontSize: 20}}>
             Log In
           </Text>
         </TouchableOpacity>
@@ -119,7 +119,7 @@ export class Login extends Component {
         <TouchableOpacity
           style={[styles.register, {position: 'absolute', top: 75 + '%'}]}
           onPress={() => this.props.navigation.navigate('register')}>
-          <Text style={{color: 'black', fontSize: 20}}>
+          <Text style={{color: 'white', fontSize: 20}}>
             Don't have an account? Sign Up!
           </Text>
         </TouchableOpacity>
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     width: 100 + '%',
-    paddingHorizontal: 50,
+    paddingHorizontal: 20,
     backgroundColor: 'rgb(210, 210, 210)',
 
     borderRadius: 10,
@@ -207,14 +207,16 @@ const styles = StyleSheet.create({
   }
 });
 
-// const mapStateToProps = state => {
-//   return {};
-// };
+const mapStateToProps = state => {
+  return {
+    state: state,
+  };
+};
 
-// const dispatchToProps = dispatch => {
-//   return {
-//     userRecieved: user => dispatch(actions.userRecieved(user)),
-//   };
-// };
+const dispatchToProps = dispatch => {
+  return {
+    userRecieved: (user) => dispatch(actions.userRecieved(user)),
+  };
+};
 
-export default Login;
+export default connect(mapStateToProps, dispatchToProps)(Login);

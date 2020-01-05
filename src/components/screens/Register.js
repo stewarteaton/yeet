@@ -15,10 +15,11 @@ import {
 import yeetIcon from '../../images/social-icon.png';
 
 export class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       credentials: {
+        name: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -36,6 +37,7 @@ export class Register extends Component {
   }
 
   registerUser() {
+    console.log('REG FIRED')
     //check if passwords match
     if (this.state.credentials.password !== this.state.credentials.confirmPassword){
       Alert.alert(
@@ -99,9 +101,16 @@ export class Register extends Component {
         </View>
 
         <View style={styles.body}>
-          <Text style={{color: 'black', fontFamily: 'Georgia', fontSize: 30, marginBottom: 55}}>
+          <Text style={{color: 'black', fontFamily: 'Georgia', fontSize: 33, marginBottom: 40 + '%'}}>
             Register
           </Text>
+          <TextInput
+            autoCapitalize="none"
+            value={this.state.name}
+            onChangeText={text => this.updateText(text, 'name')}
+            placeholder="Name"
+            style={[styles.input, {position: 'absolute', top: 44 + '%'}]}
+          />
           <TextInput
             autoCapitalize="none"
             value={this.state.email}

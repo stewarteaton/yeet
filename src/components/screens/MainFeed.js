@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   nav: {
     position: 'absolute',
     top: 50 + '%',
-  }
+  },
 });
 
 export default MainFeed;

@@ -51,6 +51,7 @@ const {
 
 app.post('/signup', (req, res) => {
   const newUser = {
+    name: req.body.name,
     email: req.body.email,
     password: req.body.password,
   };
@@ -66,8 +67,6 @@ app.post('/signup', (req, res) => {
         return res.status(400).json({error: 'This email is already in use'});
       } else {
         // res.json({confirmation: 'Success!', data: doc });
-        // res.json({confirmation: 'Success!', });
-        // console.log(newUser.email + ' ' + newUser.password);
         console.log('Success');
         return firebase
           .auth()
