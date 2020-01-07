@@ -19,7 +19,7 @@ export class Register extends Component {
     super(props);
     this.state = {
       credentials: {
-        name: '',
+        userName: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -37,7 +37,7 @@ export class Register extends Component {
   }
 
   registerUser() {
-    console.log('REG FIRED')
+    console.log('REG FIRED');
     //check if passwords match
     if (this.state.credentials.password !== this.state.credentials.confirmPassword){
       Alert.alert(
@@ -107,7 +107,7 @@ export class Register extends Component {
           <TextInput
             autoCapitalize="none"
             value={this.state.name}
-            onChangeText={text => this.updateText(text, 'name')}
+            onChangeText={text => this.updateText(text, 'userName')}
             placeholder="Name"
             style={[styles.input, {position: 'absolute', top: 44 + '%'}]}
           />

@@ -40,6 +40,9 @@ target 'Yeet' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  # added manually for RN camera
+  pod 'react-native-camera', path: '../node_modules/react-native-camera'
+
   target 'YeetTests' do
     inherit! :search_paths
     # Pods for testing

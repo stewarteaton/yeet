@@ -22,7 +22,7 @@ export class Profile extends Component {
   componentDidMount() {
     console.log('Profile');
     console.log(this.props);
-    console.log(this.props.state);
+    console.log(this.props.user);
   }
   render() {
     return (
@@ -30,7 +30,9 @@ export class Profile extends Component {
         <View style={{flex: 1, width: 100 + '%', height: 100 + '%'}}>
           {/* <Image style={styles.img} source={{uri: 'https://images.unsplash.com/photo-1516069213778-f52c5ac638fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}} /> */}
           <ImageCarousel layout={'default'} />
-          <Text style={styles.name}>{this.props.user.account.user.id}</Text>
+          <Text style={styles.name}>
+            {this.props.user.account.user.userName}
+          </Text>
         </View>
       </ScrollView>
     );
