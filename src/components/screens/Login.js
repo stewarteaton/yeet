@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
-import actions from '../../redux/actions';
+import userActions from '../../redux/actions/userActions';
+// import {loginUser} from '../../redux/actions/userActions';
 import config from '../../config/index';
 import {connect} from 'react-redux';
+import axios from 'axios';
 
 import {
   View,
@@ -16,6 +18,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import yeetIcon from '../../images/social-icon.png';
+import Axios from 'axios';
 
 export class Login extends Component {
   constructor() {
@@ -24,12 +27,36 @@ export class Login extends Component {
       credentials: {
         email: '',
         password: '',
+        errors: {},
       },
     };
   }
 
+  // Deprecated
+  // gets global ui errors and sets them to local state for ui error message in textfield
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.UI.errors) {
+  //       this.setState({ errors: nextProps.UI.errors });
+  //   }
+  // }
+
   componentDidMount(){
     console.log(this.props);
+    if (this.props.state.UI.errors){
+      Alert.alert(
+        'Error',
+        `${this.props.state.UI.errors}`,
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ],
+        {cancelable: false},
+      );
+    }
   }
 
   updateText(text, field) {
@@ -42,36 +69,49 @@ export class Login extends Component {
   }
 
   login(){
-      //send credentials to server
-      fetch(config.baseUrl + '/login', {
-        method: 'POST',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(this.state.credentials),
-      })
-      .then(response => response.json())
-      .then(jsonResponse => {
-          console.log(jsonResponse);
-          if (jsonResponse.error != null){
-              Alert.alert('Error', jsonResponse.error,
-                  [
-                  {text: 'OK', onPress: () => console.log(jsonResponse.error)},
-                  ],
-                  {cancelable: false},
-              );
-          }
-          if (jsonResponse.confirmation === 'Success!'){
-              // dispatch user data to redux store
-              console.log(jsonResponse);
-              this.props.userRecieved(jsonResponse);
-              this.props.navigation.navigate({routeName: 'main'});
-          }
-      })
-      .catch(err => {
-          console.log(err);
-      });
+    this.props.loadingUI();
+    //send credentials to server
+    fetch(config.baseUrl + '/login', {
+      method: 'POST',
+      headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.credentials),
+    })
+    .then(response => response.json())
+    .then(jsonResponse => {
+        console.log(jsonResponse);
+        if (jsonResponse.error != null){
+            Alert.alert('Error', jsonResponse.error,
+                [
+                {text: 'OK', onPress: () => console.log(jsonResponse.error)},
+                ],
+                {cancelable: false},
+            );
+        }
+        // if success
+          // saves login token to local storage incase user refreshes page etc./ 
+          // localStorage.setItem('FBIdToken', `Bearer ${jsonResponse}`);
+          const FBIdToken = `Bearer ${jsonResponse.token}`;
+          // In github docs, automatically sets headers with this format with all routes
+          axios.defaults.headers.common['Authorization'] = FBIdToken;
+          const userData = {};
+          axios.get('/user').then((res) => {
+            console.log('got user data');
+            console.log(res);
+            userData.uid = res.data.data.uid;
+            userData.userName = res.data.data.userName;
+            // dispatch user data to redux store
+            this.props.userRecieved(userData);
+            this.props.navigation.navigate({routeName: 'main'});
+          })
+            .catch(err => console.error(err));
+
+    })
+    .catch(err => {
+        console.log(err);
+    });
   }
 
 
@@ -106,7 +146,8 @@ export class Login extends Component {
 
         <TouchableOpacity
           style={[styles.login, {position: 'absolute', top: 55 + '%'}]}
-          onPress={() => { this.login(); }}>
+          onPress={() => { this.login(); }}
+          >
           <Text style={{color: 'white', fontSize: 20}}>
             Log In
           </Text>
@@ -210,12 +251,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     state: state,
+    UI: state.UI,
   };
 };
 
 const dispatchToProps = dispatch => {
   return {
-    userRecieved: (user) => dispatch(actions.userRecieved(user)),
+    loadingUI: () => dispatch(userActions.loadingUI()),
+    loadingUser: () => dispatch(userActions.loadingUser()),
+    userRecieved: (user) => dispatch(userActions.userRecieved(user)),
   };
 };
 

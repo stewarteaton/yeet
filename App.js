@@ -5,6 +5,8 @@ Icon.loadFont();
 import YEET from './src/YEET.js';
 import store from './src/redux/stores';
 import { Provider } from 'react-redux';
+import axios from 'axios';
+import config from './src/config';
 
 import {
   SafeAreaView,
@@ -14,18 +16,9 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-// Test
-// import userRecieved from './src/redux/actions';
 
-// //test
-// console.log(store.getState());
-// // // Every time the state changes, log it
-// // // Note that subscribe() returns a function for unregistering the listener
-// // const unsubscribe = store.subscribe(() => console.log(store.getState()));
-// // // Dispatch some actions
-// store.dispatch(userRecieved('Learn about actions'));
-
-// // unsubscribe();
+// so proxy base api url works outside of development stage // sol to problem with live-server in production build
+axios.defaults.baseURL = config.baseUrl;
 
 export default class App extends Component {
   render() {

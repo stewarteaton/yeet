@@ -68,7 +68,9 @@ exports.login = (req, res) => {
     email: req.body.email,
     password: req.body.password,
   };
-
+  console.log('****');
+  console.log(req.body.email);
+  // destructuring
   const {valid, errors} = validateLoginData(user);
   if (!valid) return res.status(400).json(errors);
 
@@ -76,19 +78,65 @@ exports.login = (req, res) => {
     .auth()
     .signInWithEmailAndPassword(user.email, user.password)
     .then(data => {
-      return res.json({confirmation: 'Success!', data: data});
-      // return data.user.getIdToken();
+      return data.user.getIdToken();
     })
     .then(token => {
-      // return res.json({token});
-      return;
+      return res.json({token});
     })
     .catch(error => {
       console.log(error);
       // can implement auth/wrong-password & auth/user-not-user
       return res
         .status(403)
-        .json({error: 'Wrong username/password, please try again'});
+        .json({general: 'Wrong username/password, please try again'});
     });
-  return null;
+};
+// exports.login = (req, res) => {
+//   const user = {
+//     email: req.body.email,
+//     password: req.body.password,
+//   };
+//   const {valid, errors} = validateLoginData(user);
+//   if (!valid) return res.status(400).json(errors);
+
+//   firebase
+//     .auth()
+//     .signInWithEmailAndPassword(user.email, user.password)
+//     .then(data => {
+//       return res.json({confirmation: 'Success!', data: data});
+//       // return data.user.getIdToken();
+//       // return data;
+//     })
+//     .then(token => {
+//       // return res.json({token});
+//       return;
+//     })
+//     .catch(error => {
+//       console.log(error);
+//       // can implement auth/wrong-password & auth/user-not-user
+//       return res
+//         .status(403)
+//         .json({error: 'Wrong username/password, please try again'});
+//     });
+//   return null;
+// };
+
+// ********* GET OWN USER DETAILS *********  //
+exports.getAuthenticatedUser = (req, res) => {
+  let userData = {};
+  console.log('REQUEST GET OWN DETAILS');
+  console.log(req.user);
+  return res.json({confirmation: 'Success!', data: req.user});
+  // db.doc(`/users/${req.body.data.user.email}`)
+  //   .get()
+  //   .then(doc => {
+  //     if (doc.exists) {
+  //       userData.information = doc.data();
+  //     }
+  //     return userData;
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     return res.status(500).json({error: err.code});
+  //   });
 };

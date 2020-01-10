@@ -1,14 +1,26 @@
 // import { combineReducers, configureStore, createStore } from 'redux';
-import {combineReducers, createStore} from 'redux';
-import accountReducer from '../reducers/accountReducer';
-import postReducer from '../reducers/postReducer';
+import {combineReducers, createStore, compose, applyMiddleware} from 'redux';
+import userReducer from '../reducers/userReducer';
+import uiReducer from '../reducers/uiReducer';
+import dataReducer from '../reducers/dataReducer';
+//Test
+// import thunk from 'redux-thunk';
 
 const initialState = {};
 
 const reducers = combineReducers({
-  account: accountReducer,
-  post: postReducer,
+  account: userReducer,
+  data: dataReducer,
+  UI: uiReducer,
 });
+//TEST
+// can use any middleware 
+// const middleware = [thunk];
+// const composeEnhancers = typeof window === 'object' && window._REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+//     ? window._REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+//     : compose;
+
+// const enhancer = composeEnhancers(applyMiddleware(...middleware));
 
 const store = createStore(reducers, initialState);
 
