@@ -14,12 +14,17 @@ import {
 } from 'react-native';
 
 export class ImageCarousel extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       entries: [{url: 'https://images.unsplash.com/photo-1516069213778-f52c5ac638fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'},{url: 'https://images.unsplash.com/photo-1516069213778-f52c5ac638fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}],
     };
   }
+
+  componentDidMount(){
+    console.log('IMAGE CARO');
+    console.log(this.props);
+  };
  
   _renderItem({item, index}) {
     return (
@@ -58,5 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ImageCarousel;
-
+export default (ImageCarousel);

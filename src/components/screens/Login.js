@@ -16,6 +16,7 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import yeetIcon from '../../images/social-icon.png';
 import Axios from 'axios';
@@ -69,6 +70,10 @@ export class Login extends Component {
   }
 
   login(){
+    if (this.state.credentials.email === '' || this.state.credentials.password === ''){
+      Alert.alert('Email or password field is empty');
+      return;
+    }
     this.props.loadingUI();
     //send credentials to server
     fetch(config.baseUrl + '/login', {
@@ -81,15 +86,16 @@ export class Login extends Component {
     })
     .then(response => response.json())
     .then(jsonResponse => {
-        console.log(jsonResponse);
-        if (jsonResponse.error != null){
-            Alert.alert('Error', jsonResponse.error,
+        console.log(jsonResponse.general);
+        if (jsonResponse.general){
+            this.props.clearUIErrors();
+            Alert.alert('Error', jsonResponse.general,
                 [
-                {text: 'OK', onPress: () => console.log(jsonResponse.error)},
+                {text: 'OK', onPress: () => console.log(jsonResponse.general)},
                 ],
                 {cancelable: false},
             );
-        }
+        } else {
         // if success
           // saves login token to local storage incase user refreshes page etc./ 
           // localStorage.setItem('FBIdToken', `Bearer ${jsonResponse}`);
@@ -104,18 +110,22 @@ export class Login extends Component {
             userData.userName = res.data.data.userName;
             // dispatch user data to redux store
             this.props.userRecieved(userData);
+            this.props.clearUIErrors();
             this.props.navigation.navigate({routeName: 'main'});
           })
             .catch(err => console.error(err));
+        }
 
     })
     .catch(err => {
         console.log(err);
+        this.props.setUIErrors(err);
     });
   }
 
 
   render() {
+    const { UI: { loading } } = this.props;
     return (
       <View style={styles.view}>
         <Text style={styles.yeetTitle}>Yeet</Text>
@@ -149,8 +159,11 @@ export class Login extends Component {
           onPress={() => { this.login(); }}
           >
           <Text style={{color: 'white', fontSize: 20}}>
-            Log In
-          </Text>
+            Log In </Text>
+            {loading && <View style={styles.spinner} pointerEvents={'none'}>
+                                 <ActivityIndicator size="large" color="#0000ff" style={{ zIndex: 2}}/>
+                              </View>}
+          {/* </Text> */}
         </TouchableOpacity>
 
         <View style={[styles.spaceOr, {position: 'absolute', top: 65 + '%'}]} >
@@ -167,7 +180,7 @@ export class Login extends Component {
 
       </View>
     );
-  }d
+  }
 }
 
 const styles = StyleSheet.create({
@@ -245,7 +258,15 @@ const styles = StyleSheet.create({
     height: 80,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  spinner: {
+    color: '#0000ff',
+    position: 'absolute',
+    width: 100 + '%', height: 100 + '%',
+    left: 0, right: 0, top: 0, bottom: 0,
+    justifyContent: 'center',
+    backgroundColor: '#f3f3f3',
+  },
 });
 
 const mapStateToProps = state => {
@@ -259,6 +280,8 @@ const dispatchToProps = dispatch => {
   return {
     loadingUI: () => dispatch(userActions.loadingUI()),
     loadingUser: () => dispatch(userActions.loadingUser()),
+    clearUIErrors: () => dispatch(userActions.clearUIErrors()),
+    setUIErrors: () => dispatch(userActions.setUIErrors()),
     userRecieved: (user) => dispatch(userActions.userRecieved(user)),
   };
 };

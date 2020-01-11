@@ -50,13 +50,24 @@ var loadingUser = () => ({
   type: constants.LOADING_USER,
 });
 
+var clearUIErrors = () => ({
+  type: constants.CLEAR_ERRORS,
+});
+
+var setUIErrors = data => ({
+  type: constants.SET_ERRORS,
+  payload: data,
+});
+
 var userRecieved = user => ({
-  type: constants.USER_RECIEVED,
+  type: constants.SET_USER,
   data: user,
 });
 
 export default {
   loadingUI,
   loadingUser,
+  clearUIErrors,
+  setUIErrors,
   userRecieved,
 };

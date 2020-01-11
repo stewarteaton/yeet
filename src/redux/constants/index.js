@@ -1,7 +1,12 @@
 // stores names for actions, to avoid using same names on big projects
 export default {
-  // USER Reducer types
+  // User reducer types
   USER_RECIEVED: 'USER_RECIEVED',
+  SET_AUTHENTICATED: 'SET_AUTHENTICATED',
+  SET_UNAUTHENTICATED: 'SET_UNAUTHENTICATED',
+  SET_USER: 'SET_USER',
+  LOADING_USER: 'LOADING_USER',
+  MARK_NOTIFICATIONS_READ: 'MARK_NOTIFICATIONS_READ',
 
   // UI Reducer types
   SET_ERRORS: 'SET_ERRORS',

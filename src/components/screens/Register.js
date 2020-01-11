@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import config from '../../config';
 import {
   View,
@@ -11,6 +12,7 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import yeetIcon from '../../images/social-icon.png';
 
@@ -27,6 +29,11 @@ export class Register extends Component {
     };
   }
 
+  componentDidMount(){
+    console.log('REGISTER');
+    console.log(this.props);
+  };
+
   updateText(text, field) {
     // must assign object because nested
     let newCredentials = Object.assign(this.state.credentials);
@@ -38,11 +45,12 @@ export class Register extends Component {
 
   registerUser() {
     console.log('REG FIRED');
-    //check if passwords match
-    if (this.state.credentials.password !== this.state.credentials.confirmPassword){
+    //check if passwords match & fields aren't empty
+    const creds = this.state.credentials;
+    if (creds.name === '' || creds.email === '' || creds.password !== creds.confirmPassword){
       Alert.alert(
         'Error',
-        'Passwords do not match, please try again.',
+        'Error, please try again',
         [
         {text: 'OK', onPress: () => console.log('Passwords do not match')},
         ],
@@ -50,6 +58,7 @@ export class Register extends Component {
       );
     } else {
     //send credentials to server
+    this.props.loadingUI();
     fetch(config.baseUrl + '/signup', {
         method: 'POST',
         headers: {
@@ -70,6 +79,7 @@ export class Register extends Component {
             );
         }
         if (jsonResponse.confirmation === 'Success!'){
+          this.props.clearUIErrors();
           Alert.alert(
           'Success',
           'Please log in now.',
@@ -89,6 +99,7 @@ export class Register extends Component {
 
 
   render() {
+    const { UI: { loading }} = this.props;
     return (
       <View style={styles.view}>
         <View style={styles.topBackground}>
@@ -135,17 +146,20 @@ export class Register extends Component {
             style={[styles.input, {position: 'absolute', top: 70 + '%'}]}
           />
 
-          <TouchableOpacity style={[styles.register, {position: 'absolute', top:78 + '%' }]}>
-            {/* <Text style={{color: 'blue', fontFamily: 'Georgia', fontSize: 18}}>
-              Sign Up! 
-            </Text> */}
-            <Button title="Sign Up!" color='white' onPress={() =>{this.registerUser();}} />
+          <TouchableOpacity style={[styles.register, {position: 'absolute', top:78 + '%' }]}  onPress={() => { this.registerUser(); }}>
+            <Text style={{color: 'white', fontFamily: 'Georgia', fontSize: 24}}>
+              Sign Up!
+            </Text>
+            {/* <Button title="Sign Up!" color='white' onPress={() =>{this.registerUser();}}/> */}
+            {loading && <View style={styles.spinner} pointerEvents={'none'}>
+                          <ActivityIndicator size="large" color="#0000ff" style={{ zIndex: 2}}/>
+                        </View>}
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.signIn, {position: 'absolute', bottom: 10 + '%' }]}
             onPress={() => this.props.navigation.navigate('login')}>
             <Text style={{color: 'blue', fontFamily: 'Georgia', fontSize: 18}}>
-              Already a user? Sign In!
+              Already a user? Sign In Here
             </Text>
           </TouchableOpacity>
 
@@ -235,4 +249,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Register;
+const mapStateToProps = state => {
+  return {
+    state: state,
+    UI: state.UI,
+  };
+};
+
+export default connect(mapStateToProps)(Register);
