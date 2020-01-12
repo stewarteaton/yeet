@@ -1,3 +1,3 @@
-import imageCarousel from './Post';
+// import imageCarousel from './Post';
 
-export {imageCarousel};
+// export {imageCarousel};

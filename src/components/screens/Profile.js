@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import config from '../../config';
@@ -12,7 +14,8 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {ImageCarousel} from '../presentation/imageCarousel';
+import {ImageCarousel} from '../container/imageCarousel';
+import {BackgroundCarousel} from '../container/BackgroundCarousel';
 import constants from '../../redux/constants';
 
 export class Profile extends Component {
@@ -28,8 +31,10 @@ export class Profile extends Component {
     return (
       <ScrollView>
         <View style={{flex: 1, width: 100 + '%', height: 100 + '%', alignItems: 'center'}}>
-          {/* <Image style={styles.img} source={{uri: 'https://images.unsplash.com/photo-1516069213778-f52c5ac638fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60'}} /> */}
-          <ImageCarousel layout={'default'} />
+          {/* <ImageCarousel layout={'default'} images={this.props.user.profilePictures}/> */}
+          <View style={styles.imgContainer}>
+            <BackgroundCarousel images={this.props.user.profilePictures} />
+          </View>
             <View style={styles.infoHeader} >
               <Text style={styles.name}>{this.props.user.userName}</Text>
               <TouchableOpacity style={styles.editProfile} onPress={console.log('df')}>
@@ -37,6 +42,9 @@ export class Profile extends Component {
               </TouchableOpacity>
            </View>
            <View style={{borderBottomColor: config.themeColor, borderBottomWidth: 1, width: 93 + '%'}} />
+           <View style={styles.bio}>
+            <Text>Hello guys</Text>
+           </View>
         </View>
       </ScrollView>
     );
@@ -44,6 +52,10 @@ export class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
+  imgContainer: {
+    height: config.styleConstants.screenWidth,
+    width: config.styleConstants.screenWidth,
+  },
   infoHeader: {
     width: 100 + '%',
     height: 12 + '%',
@@ -70,16 +82,18 @@ const styles = StyleSheet.create({
     fontFamily: 'Georgia',
     fontSize: 22,
   },
-  img: {
-    height: config.styleConstants.screenWidth,
-    width: 100 + '%',
-  },
   name: {
     fontSize: 35,
     fontFamily: 'Georgia',
     flex: 1,
   },
-
+  bio: {
+    width: 100 + '%',
+    height: 100 + '%',
+    paddingLeft: 5 + '%',
+    paddingRight: 5 + '%',
+    paddingTop: 2 + '%',
+  }
 });
 
 const mapStateToProps = state => {

@@ -14,7 +14,6 @@ class Camera extends PureComponent {
   componentDidMount() {
     console.log('Camera');
     console.log(this.props);
-    console.log(this.props.user);
   }
 
   render() {
@@ -65,10 +64,7 @@ class Camera extends PureComponent {
       console.log(picData);
       var cloudURL;
       await axios
-        .post(
-          config.baseUrl + `/cloudinary/${this.props.user.email}/photo`,
-          picData,
-        )
+        .post(`/cloudinary/${this.props.user.account.uid}/photo`, picData)
         .then(response => {
           console.log('worked');
           console.log(response.data.url);
@@ -81,7 +77,7 @@ class Camera extends PureComponent {
 
       // Add url to Firebase
       await axios
-        .post(config.baseUrl + `/users/${this.props.user.id}/photo`, {
+        .post(`/users/${this.props.user.account.uid}/photo`, {
           url: cloudURL,
         })
         .then(response => {
@@ -126,7 +122,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    user: state.account.user,
+    user: state,
   };
 };
 

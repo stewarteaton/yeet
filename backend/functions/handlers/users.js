@@ -126,17 +126,31 @@ exports.getAuthenticatedUser = (req, res) => {
   let userData = {};
   console.log('REQUEST GET OWN DETAILS');
   console.log(req.user);
-  return res.json({confirmation: 'Success!', data: req.user});
-  // db.doc(`/users/${req.body.data.user.email}`)
-  //   .get()
-  //   .then(doc => {
-  //     if (doc.exists) {
-  //       userData.information = doc.data();
-  //     }
-  //     return userData;
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //     return res.status(500).json({error: err.code});
-  //   });
+  // return res.json({confirmation: 'Success!', data: req.user});
+
+  db.doc(`/users/${req.user.email}`)
+    .get()
+    .then(doc => {
+      if (doc.exists) {
+        userData.information = doc.data();
+      }
+      return db.collection('profilePictures').where('userID', '==', req.user.uid).get();
+    })
+    .then(data => {
+      userData.information.profilePictures = [];
+      // Check if user has any photos, if not, then supply empty cover pic
+      if (data) {
+        data.forEach(doc => {
+          userData.information.profilePictures.push(doc.data());
+        });
+      } else {
+        userData.information.profilePictures.push({url: 'https://res.cloudinary.com/yeetsoftware/image/upload/v1578779734/no-img_csiqbs.png'})
+      }
+
+      return res.json({confirmation: 'Success!', data: userData});
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({error: err.code});
+    });
 };

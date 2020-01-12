@@ -102,14 +102,11 @@ export class Login extends Component {
           const FBIdToken = `Bearer ${jsonResponse.token}`;
           // In github docs, automatically sets headers with this format with all routes
           axios.defaults.headers.common['Authorization'] = FBIdToken;
-          const userData = {};
           axios.get('/user').then((res) => {
             console.log('got user data');
             console.log(res);
-            userData.uid = res.data.data.uid;
-            userData.userName = res.data.data.userName;
             // dispatch user data to redux store
-            this.props.userRecieved(userData);
+            this.props.userRecieved(res.data.data.information);
             this.props.clearUIErrors();
             this.props.navigation.navigate({routeName: 'main'});
           })

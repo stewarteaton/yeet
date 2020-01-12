@@ -11,7 +11,7 @@ import ThailandFeed from './components/screens/ThailandFeed';
 import Camera from './components/screens/Camera';
 import ChatFeed from './components/screens/ChatFeed';
 import Profile from './components/screens/Profile';
-import {ImageCarousel} from './components/presentation/imageCarousel';
+import EditProfile from './components/screens/EditProfile';
 
 import {
   createSwitchNavigator,
@@ -36,6 +36,7 @@ const TabScreens = createBottomTabNavigator(
     profile: {
       screen: createStackNavigator({
         profile: {screen: Profile},
+        editProfile: {screen: EditProfile},
     }),
     },
   },

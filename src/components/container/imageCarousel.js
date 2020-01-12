@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import config from '../../config';
 
 import Carousel from 'react-native-snap-carousel';
@@ -21,11 +22,11 @@ export class ImageCarousel extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     console.log('IMAGE CARO');
     console.log(this.props);
-  };
- 
+  }
+
   _renderItem({item, index}) {
     return (
       <View style={styles.slide}>
@@ -41,7 +42,7 @@ export class ImageCarousel extends Component {
         ref={c => {
           this._carousel = c;
         }}
-        data={this.state.entries}
+        data={this.props.images}
         renderItem={this._renderItem}
         sliderWidth={config.styleConstants.screenWidth}
         itemWidth={config.styleConstants.screenWidth}
@@ -63,4 +64,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default (ImageCarousel);
+const mapStateToProps = state => {
+  return {
+    state: state,
+  };
+};
+
+const dispatchToProps = dispatch => {
+  return {
+  };
+};
+
+export default connect(mapStateToProps, dispatchToProps)(ImageCarousel);
