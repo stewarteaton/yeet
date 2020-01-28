@@ -12,7 +12,7 @@ var initialState = {
     {url: 'https://images.unsplash.com/photo-1556973888-178d32cfca32?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '3'},
     {url: 'https://images.unsplash.com/photo-1525994886773-080587e161c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '4'},
     {url: 'https://images.unsplash.com/photo-1568693059993-a239b9cd4957?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '5'},
-    {url: '', order: ''},
+    {url: '', order: '9'},
   ],
   loading: false,
   authenticated: false,

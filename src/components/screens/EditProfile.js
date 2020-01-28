@@ -61,9 +61,8 @@ export class EditProfile extends Component {
         {text: 'Remove', onPress: () => {
           console.log(event);
             var obj = this.state.profilePictures;
-            obj[event].order = '';
-            obj[event] = obj[(event + 1)];
-            this.setState(obj);
+            obj[event].order = '9';
+            this.updateOrder();
           },
         },
       ],
@@ -71,28 +70,11 @@ export class EditProfile extends Component {
     );
   }
 
-  // updateOrder() {
-  //   var obj = this.state.profilePictures;
-  //   var counter = 0;
-  //   obj.sort
-  //   // for(counter = 0; counter < obj.length; counter++){
-  //   //   console.dir(obj[counter]);
-  //   //   console.log(obj[(counter - 1)][order]);
-  //   //   while (obj[(counter - 1)][order] === ''){
-  //   //     obj[(counter - 1)] = obj[counter]
-  //   //   }
-  //   // }
-  // }
-
-  // compare(a, b) {
-  //   let comparison = 0;
-  //   if (a > b) {
-  //     comparison = 1;
-  //   } else if (a < b) {
-  //     comparison = -1;
-  //   }
-  //   return comparison;
-  // }
+  updateOrder() {
+    var obj = this.state.profilePictures;
+    obj.sort((a,b) => (a.order > b.order) ? 1 : -1);
+    this.setState(obj);
+  }
 
   setMale() {
     var obj = this.state;
@@ -114,7 +96,7 @@ export class EditProfile extends Component {
           <View style={styles.imageSection}>
             {/* Logic for looping through images */}
             {this.state.profilePictures.map((image, i) => {
-              return image.order !== '' ? (
+              return image.order !== '9' ? (
                 <TouchableOpacity style={styles.imgContainer} onPress={() => this.deleteImg(i)}>
                   <Image
                     key={image.order}
