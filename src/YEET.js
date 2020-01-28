@@ -7,7 +7,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import Login from './components/screens/Login';
 import Register from './components/screens/Register';
 import MainFeed from './components/screens/MainFeed';
-import ThailandFeed from './components/screens/ThailandFeed';
+import CountryForumns from './components/screens/CountryForumns';
+import ThailandFeed from './components/container/Thailand';
 import Camera from './components/screens/Camera';
 import ChatFeed from './components/screens/ChatFeed';
 import Profile from './components/screens/Profile';
@@ -18,8 +19,12 @@ import {
   createAppContainer,
   createBottomTabNavigator,
   createStackNavigator,
+  TabBar,
 } from 'react-navigation';
 import config from './config';
+//Icon 
+import {Image, View} from 'react-native';
+import yeetIcon from '../src/images/social-icon.png';
 // import {createStackNavigator} from 'react-navigation-stack';
 // import {createBottomTabNavigator} from 'react-navigation-tabs';
 
@@ -27,7 +32,12 @@ const TabScreens = createBottomTabNavigator(
   {
     feed: {
       screen: createStackNavigator({
-        worldFeed: {screen: MainFeed},
+        recentFeed: {screen: MainFeed},
+      }),
+    },
+    forumns: {
+      screen: createStackNavigator({
+        worldFeed: {screen: CountryForumns},
         thailandFeed: {screen: ThailandFeed},
       }),
     },
@@ -48,6 +58,14 @@ const TabScreens = createBottomTabNavigator(
         let AwesomeIcon = FontAwesome;
         let iconName;
         if (routeName === 'feed') {
+          // return <Image style={{width: 50 + '%'}} source={yeetIcon} />;
+          return <Image
+          source={require('./images/social-icon.png')}
+          style={{ height: 40, width: 40, backgroundColor: 'grey', borderRadius: 5}}
+          color={tintColor}
+      />;
+        }
+        if (routeName === 'forumns') {
           iconName = 'globe-americas';
         }
         if (routeName === 'profile') {

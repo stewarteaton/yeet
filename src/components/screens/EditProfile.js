@@ -130,12 +130,12 @@ export class EditProfile extends Component {
             <Text style={{paddingTop: 3 + '%', paddingLeft: 2 + '%', fontSize: 24, fontFamily: 'Georgia'}}>I am</Text>
             <View style={styles.genderBox}>
               <TouchableOpacity onPress={() => this.setMale()}>
-                <View  style={{ backgroundColor: this.state.isMale === true? config.themeColor : 'white', borderRadius: 5}}>
+                <View  style={{ backgroundColor: this.state.isMale === true? config.themeColor : 'grey', borderRadius: 5}}>
                   <Text style={{ margin: 'auto', padding: 5, fontSize: 20, color: this.state.isMale === false? 'black' : 'white'}}>Male</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.setFemale()}>
-                <View  style={{ backgroundColor: this.state.isMale === false? config.themeColor : 'white',borderRadius: 5}}>
+                <View  style={{ backgroundColor: this.state.isMale === false? config.themeColor : 'grey',borderRadius: 5}}>
                   <Text style={{ margin: 'auto', padding: 5, fontSize: 20, color: this.state.isMale === false? 'white' : 'black'}}>Female</Text>
                 </View>
               </TouchableOpacity>

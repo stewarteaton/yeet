@@ -14,4 +14,7 @@ export default {
   CLEAR_ERRORS: 'CLEAR_ERRORS',
   LOADING_DATA: 'LOADING_DATA',
   STOP_LOADING_UI: 'STOP_LOADING_UI',
+
+  // DATA Reducer types
+  SET_POSTS: 'SET_POSTS',
 };
