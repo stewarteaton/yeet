@@ -10,5 +10,11 @@ export default {
     rowHeight: 50,
     oneThirdWidth: Dimensions.get('window').width / 3,
     screenWidth: Dimensions.get('window').width,
+    screenHeight: Dimensions.get('window').height,
+  },
+  fontFamilies: {
+    futuraMedium: 'Futura-Medium',
+    georgiaBold: 'Georgia-Bold',
+    papyrus: 'Papyrus',
   },
 };

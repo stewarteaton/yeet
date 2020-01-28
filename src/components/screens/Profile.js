@@ -23,6 +23,18 @@ export class Profile extends Component {
     super(props);
   }
 
+  static navigationOptions = {
+    title: 'Profile',
+    headerStyle: {
+      backgroundColor: 'black',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize: 20,
+    },
+  };
+
   componentDidMount() {
     console.log('Profile');
     console.log(this.props);
@@ -37,14 +49,17 @@ export class Profile extends Component {
           </View>
             <View style={styles.infoHeader} >
               <Text style={styles.name}>{this.props.user.userName}</Text>
-              <TouchableOpacity style={styles.editProfile} onPress={console.log('df')}>
-                <Text style={styles.editProfileTxt}>Edit Profile</Text>
+              <TouchableOpacity style={styles.editProfile} onPress={() => this.props.navigation.navigate('editProfile')}>
+                <Text style={styles.editProfileTxt} >Edit Profile</Text>
               </TouchableOpacity>
            </View>
            <View style={{borderBottomColor: config.themeColor, borderBottomWidth: 1, width: 93 + '%'}} />
            <View style={styles.bio}>
-            <Text>Hello guys</Text>
+             <Text>
+              {this.props.user.bio ? this.props.user.bio : <Text style={styles.bioText} placeholder='Share something'>Edit Profile to add your bio!</Text>}
+             </Text>
            </View>
+           
         </View>
       </ScrollView>
     );
@@ -88,12 +103,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   bio: {
-    width: 100 + '%',
+    width: 90 + '%',
     height: 100 + '%',
-    paddingLeft: 5 + '%',
-    paddingRight: 5 + '%',
-    paddingTop: 2 + '%',
-  }
+    backgroundColor: 'rgb(240,240,240)',
+    margin: 'auto',
+    marginTop: 5 + '%',
+    padding: 10,
+    borderRadius: 5,
+  },
+  bioText: {
+    fontSize: 20,
+  },
+  bioInput: {
+
+  },
 });
 
 const mapStateToProps = state => {

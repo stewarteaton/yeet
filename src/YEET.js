@@ -51,11 +51,11 @@ const TabScreens = createBottomTabNavigator(
           iconName = 'globe-americas';
         }
         if (routeName === 'profile') {
-          iconName = 'user-circle';
+          iconName = 'user-alt';
         } else if (routeName === 'camera') {
-          iconName = 'camera';
+          iconName = 'camera-retro';
         } else if (routeName === 'chat') {
-          iconName = 'comments';
+          iconName = 'sms';
         }
 
         // You can return any component that you like here!
@@ -87,7 +87,8 @@ const MainStack = createSwitchNavigator(
     main: TabScreens,
   },
   {
-    initialRouteName: 'login',
+    // initialRouteName: 'login',
+    initialRouteName: 'main',
   },
 );
 

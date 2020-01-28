@@ -29,10 +29,10 @@ module.exports = (req, res, next) => {
         .get();
     })
     .then(data => {
-      console.log('****************');
-      console.log(data.docs[0].data());
+      // console.log('****************');
+      // console.log(data.docs[0].data());
       // attaches handle associated with user to request user handle
-      req.user.userName = data.docs[0].data().userName;
+      // req.user.userName = data.docs[0].data().userName;
       // req.user.email = data.docs[0].data().email;
       // proceeds to next piece of middle ware
       return next();

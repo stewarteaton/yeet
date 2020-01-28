@@ -143,6 +143,19 @@ exports.getAuthenticatedUser = (req, res) => {
         data.forEach(doc => {
           userData.information.profilePictures.push(doc.data());
         });
+        // empty index to fill 6 spots
+        const emptyPic = {
+          url: '',
+          userID: '',
+          order: '',
+          createdAt: '',
+        };
+
+        // If user has < 6 profilePics, loop through to add empty indexes for UI
+        while (userData.information.profilePictures.length < 6) {
+          emptyPic.url = `${userData.information.profilePictures.length}`;
+          userData.information.profilePictures.push(emptyPic);
+        }
       } else {
         userData.information.profilePictures.push({url: 'https://res.cloudinary.com/yeetsoftware/image/upload/v1578779734/no-img_csiqbs.png'})
       }

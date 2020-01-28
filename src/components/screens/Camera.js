@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {PureComponent} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -77,7 +78,7 @@ class Camera extends PureComponent {
 
       // Add url to Firebase
       await axios
-        .post(`/users/${this.props.user.account.uid}/photo`, {
+        .post(`/users/${this.props.user.account.userID}/photo`, {
           url: cloudURL,
         })
         .then(response => {
@@ -131,4 +132,3 @@ const dispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, dispatchToProps)(Camera);
-// export default Camera;

@@ -30,7 +30,7 @@ class BackgroundCarousel extends React.Component {
       <View style={{height: 100 + '%', width: 100 + '%'}}>
         <ScrollView horizontal pagingEnabled onMomentumScrollEnd={this.setSelectedIndex}>
           {images.map(image => (
-            <Image key={image.url} source={{uri: image.url}} style={styles.backgroundImg} />
+            <Image key={image.order} source={{uri: image.url}} style={styles.backgroundImg} /> 
           ))}
         </ScrollView>
         <View style={styles.circleDiv}>

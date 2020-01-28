@@ -150,7 +150,6 @@ export class Register extends Component {
             <Text style={{color: 'white', fontFamily: 'Georgia', fontSize: 24}}>
               Sign Up!
             </Text>
-            {/* <Button title="Sign Up!" color='white' onPress={() =>{this.registerUser();}}/> */}
             {loading && <View style={styles.spinner} pointerEvents={'none'}>
                           <ActivityIndicator size="large" color="#0000ff" style={{ zIndex: 2}}/>
                         </View>}
