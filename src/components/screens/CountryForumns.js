@@ -15,15 +15,21 @@ import {
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-const CONTINENT_OPTIONS = ['SE Asia', 'Europe', 'South America', 'North America']
+const continentOptions = [' SE Asia ', ' Europe ', ' South America ', ' North America '];
 
 export class MainFeed extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      data: [['C', 'Java', 'JavaScript', 'PHP'],['as','df']],
-    };
+
+    this.state = {selectedIndex: '', dropDown:{}};
+
+    this._dropdown_select = this._dropdown_select.bind(this);
   }
+
+  _dropdown_select(event){
+    this.setState({selectedIndex: event.target.index, dropDown:event});
+    console.dir(this.state);
+ }
 
   static navigationOptions = {
     title: 'Travel Forums',
@@ -36,14 +42,19 @@ export class MainFeed extends Component {
       fontSize: 20,
     },
     headerLeft: (
-      <ModalDropdown options={CONTINENT_OPTIONS} style={{backgroundColor: config.themeColor, width: 100, height: 100 + '%', borderRadius: 10}}
-        textStyle={{color:'white', fontSize: 30}}/>
+      <ModalDropdown 
+        options={continentOptions} style={{borderWidth: 1, borderColor: config.themeColor, height: 100 + '%', borderRadius: 10, justifyContent: 'center'}}
+        textStyle={{color:'white', fontSize: 20}}
+        dropdownTextStyle={{fontSize: 20, backgroundColor: config.themeColor, color: 'white'}}
+        defaultIndex={0}
+        onSelect={this._dropdown_select}
+        />
     ),
   };
 
   componentDidMount() {
     console.log(this.props);
-    console.log(this.state.data);
+    console.log(this.state);
   }
 
   render() {

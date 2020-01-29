@@ -6,6 +6,12 @@ export default {
 
   themeColor: 'rgb(62,152,236)',
 
+  images: {
+    heartIcon: require('../images/assets/heart.png'),
+    chatIcon: require('../images/assets/chat.png'),
+    paperIcon: require('../images/assets/paper-plane.png'),
+    heartFullIcon: require('../images/assets/heartFull.png'),
+  },
   styleConstants: {
     rowHeight: 50,
     oneThirdWidth: Dimensions.get('window').width / 3,
