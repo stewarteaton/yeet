@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import config from '../../config';
 
@@ -14,6 +15,11 @@ export class Post extends Component {
   componentDidMount() {
     console.log('POST STATE: ' + this.state);
     console.log(this.props);
+    var now = new Date();
+    var then = new Date(this.props.item.createdAt);
+    var Difference_In_Time = now.getTime() - then.getTime();
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    console.log(Difference_In_Days);
   }
 
   likeToggled() {
@@ -24,11 +30,19 @@ export class Post extends Component {
 
   render() {
     const imageHeight = Math.floor(Dimensions.get('window').width * 1.1);
-    const imageUri = `https://res.cloudinary.com/yeetsoftware/image/upload/w_${config.styleConstants.screenWidth},h_${imageHeight},c_scale/countryForumPics/photo-1546484488-2a1430996887_hdgoti.jpg`;
+    // const imageUri = `https://res.cloudinary.com/yeetsoftware/image/upload/w_${config.styleConstants.screenWidth},h_${imageHeight},c_scale/countryForumPics/photo-1546484488-2a1430996887_hdgoti.jpg`;
+    const imageUri = `${this.props.item.bodyImage}`;
 
     // heart icon color
     const heartIconColor = this.state.liked ? 'rgb(252,61,57)' : null;
     const heartToggleIcon = this.state.liked ? config.images.heartFullIcon : config.images.heartIcon;
+
+    // Get days ago
+    var now = new Date();
+    var then = new Date(this.props.item.createdAt);
+    var Difference_In_Time = now.getTime() - then.getTime();
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    Difference_In_Days = Math.round(Difference_In_Days);
 
     return (
       <View style={{width: 100 + '%', flex: 1, borderBottomWidth: 7, borderBottomColor: 'black'}}>
@@ -36,12 +50,11 @@ export class Post extends Component {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
               source={{
-                uri:
-                  'https://res.cloudinary.com/dmgp6exro/image/upload/v1564460812/profile-pic.jpg',
+                uri: `${this.props.item.userImage}`,
               }}
               style={styles.userPic}
             />
-            <Text style={{marginLeft: 10, fontSize: 18, fontWeight: 'bold'}}>Stewart Eaton</Text>
+            <Text style={{marginLeft: 10, fontSize: 18, fontWeight: 'bold'}}>{this.props.item.userName}</Text>
           </View>
           <View style={{alignItems: 'center', marginRight: 10}}>
             <Text style={{fontSize: 30}}>...</Text>
@@ -50,7 +63,7 @@ export class Post extends Component {
 
         {/* Post Message if present */}
         <View style={{width: 100 + '%'}}>
-          <Text style={{fontSize: 18, paddingHorizontal: 5, paddingVertical: 10}}>Full send, eh?</Text>
+          <Text style={{fontSize: 18, paddingHorizontal: 5, paddingVertical: 10}}>{this.props.item.body}</Text>
         </View>
         {/* Post Image if present */}
         <TouchableOpacity onPress={()=>{ this.likeToggled(); }}  activeOpacity={0.8}>
@@ -74,11 +87,15 @@ export class Post extends Component {
         </View>
         <View style={styles.likesBar}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.likesTxt}>120 Likes</Text>
-            <Text style={styles.likesTxt}>18 Comments</Text>
+            <Text style={styles.likesTxt}>
+              {this.props.item.likeCount} Likes
+            </Text>
+            <Text style={styles.likesTxt}>
+              {this.props.item.commentCount} Comments
+            </Text>
           </View>
           <View style={styles.daysAgo}>
-            <Text style={styles.likesTxt}>3 days ago</Text>
+            <Text style={styles.likesTxt}>{Difference_In_Days} days ago</Text>
           </View>
         </View>
       </View>
@@ -133,4 +150,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Post;
+const mapStateToProps = state => {
+  return {
+    user: state.account,
+    UI: state.UI,
+    data: state.data,
+  };
+}
+
+const dispatchToProps = dispatch => {
+  return {};
+}
+export default connect(mapStateToProps, dispatchToProps)(Post);

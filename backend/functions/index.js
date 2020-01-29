@@ -21,8 +21,14 @@ const FBAuth = require('./utilities/fbAuth');
 
 const {db} = require('./utilities/admin');
 
+const {getAllPosts, postOnePost} = require('./handlers/posts');
 const {signup, login, getAuthenticatedUser} = require('./handlers/users');
 const {cloudinaryUpload, addCloudUrl} = require('./handlers/camera');
+
+// FBAuth middleware for protected routes, 
+// GET and POST shouts
+app.get('/posts', getAllPosts);
+app.post('/post', FBAuth, postOnePost);
 
 // *** USER Login/ Signup
 app.post('/signup', signup);

@@ -13,10 +13,12 @@ let db = {
   posts: [
     {
       userName: 'Stew',
-      body: 'shout body',
+      message: 'yo whats up',
+      bodyImage: 'post img url',
       createdAt: '2019-07-07T20:45:03.445Z',
       likeCount: 5,
       commentCount: 2,
+      userImage: 'image url',
     },
   ],
 };
