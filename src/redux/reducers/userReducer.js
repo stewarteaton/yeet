@@ -3,14 +3,16 @@ import constants from '../constants';
 var initialState = {
   id: '',
   email: '',
-  userName: 'Pegasus',
-  bio: 'Hello, my name is Pegasus',
-  isMale: false,
+  userName: 'Mike',
+  bio: `Hello, my name is Mike!
+  
+I'm new on this App, and am looking forward to meeting some of you on my travels.`,
+  isMale: true,
   profilePictures: [
-    {url: 'https://images.unsplash.com/photo-1543668900-9124915a121f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '1'}, 
-    {url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '2'}, 
+    {url: 'https://images.unsplash.com/flagged/photo-1566127992631-137a642a90f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '1'}, 
+    {url: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '4'}, 
     {url: 'https://images.unsplash.com/photo-1556973888-178d32cfca32?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '3'},
-    {url: 'https://images.unsplash.com/photo-1525994886773-080587e161c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '4'},
+    {url: 'https://images.unsplash.com/photo-1525994886773-080587e161c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '2'},
     {url: 'https://images.unsplash.com/photo-1568693059993-a239b9cd4957?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60', order: '5'},
     {url: '', order: '9'},
   ],

@@ -7,6 +7,9 @@ export default {
   themeColor: 'rgb(62,152,236)',
 
   images: {
+    cameraIcon: require('../images/assets/camera.png'),
+    galleryIcon: require('../images/assets/photoGallery.png'),
+    deleteIcon: require('../images/assets/cancel.png'),
     heartIcon: require('../images/assets/heart.png'),
     chatIcon: require('../images/assets/chat.png'),
     paperIcon: require('../images/assets/paper-plane.png'),

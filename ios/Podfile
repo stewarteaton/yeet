@@ -36,12 +36,16 @@ target 'Yeet' do
 
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
 
-  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   # added manually for RN camera
   pod 'react-native-camera', path: '../node_modules/react-native-camera'
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
   target 'YeetTests' do
     inherit! :search_paths

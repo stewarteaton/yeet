@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Image, ScrollView, View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Button} from 'react-native';
-import {Badge} from 'react-native-elements';
 import {connect} from 'react-redux';
+import ImagePicker from 'react-native-image-picker';
 import config from '../../config';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
@@ -37,12 +37,30 @@ export class EditProfile extends Component {
 
   componentDidMount() {
     console.log(this.props);
+    this.updateOrder();
   }
 
   updateText(text, field) {
     var obj = this.state;
     obj[field] = text;
     this.setState(obj);
+  }
+
+  addNewImg = event => {
+    console.log(event);
+    var obj = this.state.profilePictures;
+    const options = {
+      noData: true,
+    }
+    ImagePicker.launchImageLibrary(options, response => {
+      console.log('response', response);
+      if (response.uri) {
+        obj[event].order = event;
+        obj[event].url = response.uri;
+        this.setState(obj);
+        this.updateOrder();
+      }
+    })
   }
 
   deleteImg = event => {
@@ -62,6 +80,7 @@ export class EditProfile extends Component {
           console.log(event);
             var obj = this.state.profilePictures;
             obj[event].order = '9';
+            obj[event].url = '';
             this.updateOrder();
           },
         },
@@ -108,8 +127,8 @@ export class EditProfile extends Component {
                   </View>
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity style={styles.imgContainer}>
-                  {/* <View style={styles.addImgIcon} /> */}
+                // This is the button for adding an Image
+                <TouchableOpacity style={styles.imgContainer} onPress={() => this.addNewImg(i)}>
                   <View style={styles.addImgIcon}>
                     <FontAwesome name={'plus-square'} size={110} color={config.themeColor} style={styles.fontAwesome}/>
                   </View>

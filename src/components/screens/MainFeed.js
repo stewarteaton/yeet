@@ -1,11 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {ScrollView, View, Text} from 'react-native';
+import config from '../../config';
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 import PostFeed from '../container/PostFeed';
-// import userActions from '../../redux/actions/userActions';
-// import dataActions from '../../redux/actions/dataActions';
-import { getPosts } from '../../redux/actions/dataActions';
-
+import {getPosts} from '../../redux/actions/dataActions';
 
 export class MainFeed extends Component {
   constructor(props) {
@@ -25,24 +29,37 @@ export class MainFeed extends Component {
     },
   };
 
-//   componentDidMount() {
-//     this.props.getPosts();
-//     console.log(this.props);
-//   }
-
   render() {
-    // const { posts, loading } = this.props.data;
-
-    // let recentPostsMarkup = !loading ? (
-    //     posts.map((post) => <Shout key={shout.shoutID} shout={shout}/>)
-    // ) : ( <ShoutSkeleton />);
     return (
       <View style={{width: 100 + '%', flex: 1}}>
+        {/* Floating Button that allows user to POST */}
+        <View style={styles.postButton}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('createPost')}>
+            <Text style={{fontSize: 48, color: 'white', marginTop: 3}}>+</Text>
+          </TouchableOpacity>
+        </View>
+
         <PostFeed />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  postButton: {
+    position: 'absolute',
+    zIndex: 2,
+    bottom: 40,
+    right: 40,
+    backgroundColor: config.themeColor,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    // justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 const mapStateToProps = state => {
   return {
@@ -59,4 +76,7 @@ const mapStateToProps = state => {
 //   };
 // };
 
-export default connect(mapStateToProps, {getPosts})(MainFeed);
+export default connect(
+  mapStateToProps,
+  {getPosts},
+)(MainFeed);

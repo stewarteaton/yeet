@@ -8,6 +8,7 @@ import Login from './components/screens/Login';
 import Register from './components/screens/Register';
 import MainFeed from './components/screens/MainFeed';
 import CountryForumns from './components/screens/CountryForumns';
+import CreatePost from './components/screens/CreatePost';
 import ThailandFeed from './components/container/Thailand';
 import Camera from './components/screens/Camera';
 import ChatFeed from './components/screens/ChatFeed';
@@ -22,7 +23,7 @@ import {
   TabBar,
 } from 'react-navigation';
 import config from './config';
-//Icon 
+//Icon
 import {Image, View} from 'react-native';
 import yeetIcon from '../src/images/social-icon.png';
 // import {createStackNavigator} from 'react-navigation-stack';
@@ -33,6 +34,12 @@ const TabScreens = createBottomTabNavigator(
     feed: {
       screen: createStackNavigator({
         recentFeed: {screen: MainFeed},
+        createPost: {
+          screen: CreatePost,
+          navigationOptions: {
+            tabBarVisible: false,
+          },
+        },
       }),
     },
     forumns: {
@@ -47,7 +54,7 @@ const TabScreens = createBottomTabNavigator(
       screen: createStackNavigator({
         profile: {screen: Profile},
         editProfile: {screen: EditProfile},
-    }),
+      }),
     },
   },
   {
@@ -59,11 +66,18 @@ const TabScreens = createBottomTabNavigator(
         let iconName;
         if (routeName === 'feed') {
           // return <Image style={{width: 50 + '%'}} source={yeetIcon} />;
-          return <Image
-          source={require('./images/social-icon.png')}
-          style={{ height: 40, width: 40, backgroundColor: 'grey', borderRadius: 5}}
-          color={tintColor}
-      />;
+          return (
+            <Image
+              source={require('./images/social-icon.png')}
+              style={{
+                height: 40,
+                width: 40,
+                backgroundColor: 'grey',
+                borderRadius: 5,
+              }}
+              color={tintColor}
+            />
+          );
         }
         if (routeName === 'forumns') {
           iconName = 'globe-americas';
@@ -71,7 +85,8 @@ const TabScreens = createBottomTabNavigator(
         if (routeName === 'profile') {
           iconName = 'user-alt';
         } else if (routeName === 'camera') {
-          iconName = 'camera-retro';
+          // iconName = 'camera-retro';
+          return <Image style={{height: 40, width:40, tintColor: 'white'}} source={config.images.cameraIcon}/>
         } else if (routeName === 'chat') {
           iconName = 'sms';
         }

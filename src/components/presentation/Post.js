@@ -13,13 +13,7 @@ export class Post extends Component {
   }
 
   componentDidMount() {
-    console.log('POST STATE: ' + this.state);
     console.log(this.props);
-    var now = new Date();
-    var then = new Date(this.props.item.createdAt);
-    var Difference_In_Time = now.getTime() - then.getTime();
-    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    console.log(Difference_In_Days);
   }
 
   likeToggled() {
@@ -46,6 +40,8 @@ export class Post extends Component {
 
     return (
       <View style={{width: 100 + '%', flex: 1, borderBottomWidth: 7, borderBottomColor: 'black'}}>
+
+        {/* User Nav Bar */}
         <View style={styles.userBar}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Image
@@ -62,13 +58,16 @@ export class Post extends Component {
         </View>
 
         {/* Post Message if present */}
+        {this.props.item.body !== '' &&
         <View style={{width: 100 + '%'}}>
           <Text style={{fontSize: 18, paddingHorizontal: 5, paddingVertical: 10}}>{this.props.item.body}</Text>
-        </View>
+        </View>}
+
         {/* Post Image if present */}
+        {this.props.item.bodyImage !== '' && 
         <TouchableOpacity onPress={()=>{ this.likeToggled(); }}  activeOpacity={0.8}>
           <Image source={{uri: imageUri}} style={{width: config.styleConstants.screenWidth, height: imageHeight}} />
-        </TouchableOpacity>
+        </TouchableOpacity>}
 
         {/* Post Icon Bar */}
         <View style={styles.iconBar}>
